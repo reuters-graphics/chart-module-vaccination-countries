@@ -1,0 +1,434 @@
+[
+  {
+    "country": "Israel",
+    "countryISO": "IL",
+    "date": "2021-01-13",
+    "totalDoses": 1990803,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "21989.80",
+    "population": 9053300
+  },
+  {
+    "country": "United Arab Emirates",
+    "countryISO": "AE",
+    "date": "2021-01-13",
+    "totalDoses": 1394580,
+    "vaccineName": "Pfizer/BioNTech, Sinopharm",
+    "perPop": "14273.33",
+    "population": 9770529
+  },
+  {
+    "country": "Gibraltar",
+    "countryISO": "GI",
+    "date": "2021-01-12",
+    "totalDoses": 2501,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "7421.14",
+    "population": 33701
+  },
+  {
+    "country": "Bahrain",
+    "countryISO": "BH",
+    "date": "2021-01-12",
+    "totalDoses": 97776,
+    "vaccineName": "Pfizer/BioNTech, Sinopharm",
+    "perPop": "5957.69",
+    "population": 1641172
+  },
+  {
+    "country": "United Kingdom",
+    "countryISO": "GB",
+    "date": "2021-01-12",
+    "totalDoses": 3067541,
+    "vaccineName": "Oxford/AstraZeneca, Pfizer/BioNTech",
+    "perPop": "4589.76",
+    "population": 66834405
+  },
+  {
+    "country": "United States",
+    "countryISO": "US",
+    "date": "2021-01-13",
+    "totalDoses": 10278462,
+    "vaccineName": "Moderna, Pfizer/BioNTech",
+    "perPop": "3131.39",
+    "population": 328239523
+  },
+  {
+    "country": "Denmark",
+    "countryISO": "DK",
+    "date": "2021-01-12",
+    "totalDoses": 118073,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "2029.25",
+    "population": 5818553
+  },
+  {
+    "country": "Iceland",
+    "countryISO": "IS",
+    "date": "2020-12-30",
+    "totalDoses": 4875,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "1349.25",
+    "population": 361313
+  },
+  {
+    "country": "Italy",
+    "countryISO": "IT",
+    "date": "2021-01-12",
+    "totalDoses": 800730,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "1327.97",
+    "population": 60297396
+  },
+  {
+    "country": "Spain",
+    "countryISO": "ES",
+    "date": "2021-01-13",
+    "totalDoses": 581638,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "1235.51",
+    "population": 47076781
+  },
+  {
+    "country": "Slovenia",
+    "countryISO": "SI",
+    "date": "2021-01-12",
+    "totalDoses": 24462,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "1171.58",
+    "population": 2087946
+  },
+  {
+    "country": "Canada",
+    "countryISO": "CA",
+    "date": "2021-01-12",
+    "totalDoses": 388493,
+    "vaccineName": "Moderna, Pfizer/BioNTech",
+    "perPop": "1033.52",
+    "population": 37589262
+  },
+  {
+    "country": "Estonia",
+    "countryISO": "EE",
+    "date": "2021-01-13",
+    "totalDoses": 13481,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "1016.21",
+    "population": 1326590
+  },
+  {
+    "country": "Lithuania",
+    "countryISO": "LT",
+    "date": "2021-01-12",
+    "totalDoses": 27143,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "973.97",
+    "population": 2786844
+  },
+  {
+    "country": "Germany",
+    "countryISO": "DE",
+    "date": "2021-01-12",
+    "totalDoses": 758093,
+    "vaccineName": "Moderna, Pfizer/BioNTech",
+    "perPop": "911.91",
+    "population": 83132799
+  },
+  {
+    "country": "Hungary",
+    "countryISO": "HU",
+    "date": "2021-01-13",
+    "totalDoses": 86929,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "889.76",
+    "population": 9769949
+  },
+  {
+    "country": "Croatia",
+    "countryISO": "HR",
+    "date": "2021-01-13",
+    "totalDoses": 34553,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "849.49",
+    "population": 4067500
+  },
+  {
+    "country": "Poland",
+    "countryISO": "PL",
+    "date": "2021-01-13",
+    "totalDoses": 309620,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "815.41",
+    "population": 37970874
+  },
+  {
+    "country": "Ireland",
+    "countryISO": "IE",
+    "date": "2021-01-10",
+    "totalDoses": 40000,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "809.48",
+    "population": 4941444
+  },
+  {
+    "country": "Romania",
+    "countryISO": "RO",
+    "date": "2021-01-13",
+    "totalDoses": 154268,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "796.98",
+    "population": 19356544
+  },
+  {
+    "country": "Sweden",
+    "countryISO": "SE",
+    "date": "2021-01-10",
+    "totalDoses": 79466,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "772.61",
+    "population": 10285453
+  },
+  {
+    "country": "Slovakia",
+    "countryISO": "SK",
+    "date": "2021-01-12",
+    "totalDoses": 39395,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "722.30",
+    "population": 5454073
+  },
+  {
+    "country": "China",
+    "countryISO": "CN",
+    "date": "2021-01-13",
+    "totalDoses": 10000000,
+    "vaccineName": "CNBG, Sinovac",
+    "perPop": "715.45",
+    "population": 1397715000
+  },
+  {
+    "country": "Austria",
+    "countryISO": "AT",
+    "date": "2021-01-13",
+    "totalDoses": 63280,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "712.85",
+    "population": 8877067
+  },
+  {
+    "country": "Portugal",
+    "countryISO": "PT",
+    "date": "2021-01-08",
+    "totalDoses": 70000,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "681.64",
+    "population": 10269417
+  },
+  {
+    "country": "Greece",
+    "countryISO": "GR",
+    "date": "2021-01-13",
+    "totalDoses": 64588,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "602.71",
+    "population": 10716322
+  },
+  {
+    "country": "Russia",
+    "countryISO": "RU",
+    "date": "2021-01-02",
+    "totalDoses": 800000,
+    "vaccineName": "Sputnik V",
+    "perPop": "554.12",
+    "population": 144373535
+  },
+  {
+    "country": "Saudi Arabia",
+    "countryISO": "SA",
+    "date": "2021-01-11",
+    "totalDoses": 178337,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "520.41",
+    "population": 34268528
+  },
+  {
+    "country": "Latvia",
+    "countryISO": "LV",
+    "date": "2021-01-12",
+    "totalDoses": 9899,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "517.52",
+    "population": 1912789
+  },
+  {
+    "country": "Cyprus",
+    "countryISO": "CY",
+    "date": "2021-01-10",
+    "totalDoses": 6035,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "503.51",
+    "population": 1198575
+  },
+  {
+    "country": "Norway",
+    "countryISO": "NO",
+    "date": "2021-01-12",
+    "totalDoses": 25249,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "472.13",
+    "population": 5347896
+  },
+  {
+    "country": "Belgium",
+    "countryISO": "BE",
+    "date": "2021-01-13",
+    "totalDoses": 53726,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "467.83",
+    "population": 11484055
+  },
+  {
+    "country": "Finland",
+    "countryISO": "FI",
+    "date": "2021-01-13",
+    "totalDoses": 23126,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "418.93",
+    "population": 5520314
+  },
+  {
+    "country": "Oman",
+    "countryISO": "OM",
+    "date": "2021-01-13",
+    "totalDoses": 20649,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "415.06",
+    "population": 4974986
+  },
+  {
+    "country": "Luxembourg",
+    "countryISO": "LU",
+    "date": "2021-01-12",
+    "totalDoses": 2372,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "382.64",
+    "population": 619896
+  },
+  {
+    "country": "Argentina",
+    "countryISO": "AR",
+    "date": "2021-01-13",
+    "totalDoses": 166833,
+    "vaccineName": "Sputnik V",
+    "perPop": "371.25",
+    "population": 44938712
+  },
+  {
+    "country": "France",
+    "countryISO": "FR",
+    "date": "2021-01-13",
+    "totalDoses": 247167,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "368.58",
+    "population": 67059887
+  },
+  {
+    "country": "Malta",
+    "countryISO": "MT",
+    "date": "2021-01-03",
+    "totalDoses": 1400,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "278.52",
+    "population": 502653
+  },
+  {
+    "country": "Netherlands",
+    "countryISO": "NL",
+    "date": "2021-01-13",
+    "totalDoses": 47000,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "271.16",
+    "population": 17332850
+  },
+  {
+    "country": "Bulgaria",
+    "countryISO": "BG",
+    "date": "2021-01-13",
+    "totalDoses": 15780,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "226.21",
+    "population": 6975761
+  },
+  {
+    "country": "Costa Rica",
+    "countryISO": "CR",
+    "date": "2021-01-08",
+    "totalDoses": 9751,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "193.18",
+    "population": 5047561
+  },
+  {
+    "country": "Czech Republic",
+    "countryISO": "CZ",
+    "date": "2021-01-06",
+    "totalDoses": 19918,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "186.68",
+    "population": 10669709
+  },
+  {
+    "country": "Serbia",
+    "countryISO": "RS",
+    "date": "2021-01-10",
+    "totalDoses": 9300,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "133.91",
+    "population": 6944975
+  },
+  {
+    "country": "Singapore",
+    "countryISO": "SG",
+    "date": "2021-01-12",
+    "totalDoses": 6200,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "108.70",
+    "population": 5703569
+  },
+  {
+    "country": "Mexico",
+    "countryISO": "MX",
+    "date": "2021-01-12",
+    "totalDoses": 92879,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "72.80",
+    "population": 127575529
+  },
+  {
+    "country": "Kuwait",
+    "countryISO": "KW",
+    "date": "2020-12-28",
+    "totalDoses": 2500,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "59.42",
+    "population": 4207083
+  },
+  {
+    "country": "Chile",
+    "countryISO": "CL",
+    "date": "2021-01-06",
+    "totalDoses": 10699,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "56.45",
+    "population": 18952038
+  },
+  {
+    "country": "Guinea",
+    "countryISO": "GN",
+    "date": "2020-12-30",
+    "totalDoses": 25,
+    "vaccineName": "Sputnik V",
+    "perPop": "0.20",
+    "population": 12771246
+  }
+]
