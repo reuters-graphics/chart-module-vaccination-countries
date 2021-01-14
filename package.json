@@ -18,10 +18,12 @@
     "chart:build-lib": "rollup -c rollup.config.lib.js"
   },
   "dependencies": {
+    "@reuters-graphics/graphics-atlas-client": "^0.4.8",
     "compression": "^1.7.1",
     "d3": "^6.2.0",
     "d3-appendselect": "^0.0.4",
     "lodash": "^4.17.20",
+    "mustache": "^4.1.0",
     "polka": "next",
     "sirv": "^1.0.0"
   },
