@@ -1,10 +1,10 @@
 {
-  "name": "@reuters-graphics/vaccination-lollipop",
+  "name": "@reuters-graphics/chart-module-vaccination-countries",
   "version": "0.0.1",
   "main": "dist/index.js",
   "license": "MIT",
   "private": false,
-  "repository": "github:reuters-graphics/chart-module-vaccination-lollipop",
+  "repository": "github:reuters-graphics/chart-module-vaccination-countries",
   "files": [
     "src/js/**/*",
     "src/scss/**/*",

@@ -5,13 +5,13 @@
 ### Install
 
 ```
-$ yarn add https://github.com/reuters-graphics/chart-module-vaccination-lollipop.git
+$ yarn add https://github.com/reuters-graphics/chart-module-vaccination-countries.git
 ```
 
 ### Use
 
 ```javascript
-import VaccinationLollipop from '@reuters-graphics/chart-module-vaccination-lollipop';
+import VaccinationLollipop from '@reuters-graphics/chart-module-vaccination-countries';
 
 const chart = new VaccinationLollipop();
 
@@ -37,7 +37,7 @@ To apply this chart's default styles when using SCSS, simply define the variable
 ```CSS
 $VaccinationLollipop-container: '#chart';
 
-@import '~@reuters-graphics/chart-module-vaccination-lollipop/src/scss/chart';
+@import '~@reuters-graphics/chart-module-vaccination-countries/src/scss/chart';
 ```
 
 ## Developing chart modules

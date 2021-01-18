@@ -38,7 +38,7 @@ class VaccinationLollipop extends BaseChartComponent {
       strokeDasharray: '4',
       text: {
         milestone: 'Number of doses needed to vaccinate {{ number }}% of the population',
-        milestoneMinor: '{{ number }}% of population...',
+        milestoneMinor: '...{{ number }}% of population',
       },
       topText: 'Doses per 100 people',
     };
@@ -161,7 +161,7 @@ class VaccinationLollipop extends BaseChartComponent {
 
       this.selection().appendSelect('p.ann-text-1.annotation-p')
         .style('left', `${xScale(useMilestone*2)+margin.left}px`)
-        .style('top', `${height/3}px`)
+        .style('top', `${yScale(data[2].country)+margin.top}px`)
         .text(Mustache.render(props.text.milestone, { number: useMilestone*100 }))
 
       const a2 = plot.appendSelect('g.annotations')
@@ -177,7 +177,7 @@ class VaccinationLollipop extends BaseChartComponent {
 
       this.selection().appendSelect('p.ann-text-2.annotation-p')
         .style('left', `${xScale(milestones[milestoneIndex-1]*2)+margin.left}px`)
-        .style('top', `${height*.8}px`)
+        .style('top', `${yScale(data[data.length-1].country)+margin.top}px`)
         .text(Mustache.render(props.text.milestoneMinor, { number: milestones[milestoneIndex-1]*100 }))
 
       return this; // Generally, always return the chart class from draw!
