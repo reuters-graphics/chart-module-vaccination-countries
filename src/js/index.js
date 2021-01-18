@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
-import BaseChartComponent from './baseClasses/ChartComponent';
 import AtlasMetadataClient from '@reuters-graphics/graphics-atlas-client';
+import BaseChartComponent from './baseClasses/ChartComponent';
 import Mustache from 'mustache';
 
 const client = new AtlasMetadataClient();
@@ -26,10 +26,10 @@ class VaccinationLollipop extends BaseChartComponent {
         left: 120,
       },
       filterNumber: 15,
-      padding: .4,
+      padding: 0.4,
       rectFill: 'rgba(255,255,255,.3)',
-      countryNameGetter: (d) => client.getCountry(d).translations['en'],
-      milestones: [.1, .2, .3, .4, .5],
+      countryNameGetter: (d) => client.getCountry(d).translations.en,
+      milestones: [0.1, 0.2, 0.3, 0.4, 0.5],
       annotationStroke: 'white',
       strokeDasharray: '4',
       text: {
@@ -37,7 +37,7 @@ class VaccinationLollipop extends BaseChartComponent {
         milestoneMinor: '...{{ number }}% of population',
       },
       topText: 'Doses per 100 people',
-      countryLinks: function(d){console.log(d)},
+      countryLinks: function(d) { console.log(d); },
     };
 
     /**
@@ -66,7 +66,7 @@ class VaccinationLollipop extends BaseChartComponent {
       const maxValue = d3.max(data, d => d.perPop);
       const { milestones } = props;
 
-      for (let i = milestones.length - 1; i >= 0 ; i--) {
+      for (let i = milestones.length - 1; i >= 0; i--) {
         if (milestones[i] * 2 > maxValue) {
           useMilestone = milestones[i];
           milestoneIndex = i;
@@ -81,18 +81,18 @@ class VaccinationLollipop extends BaseChartComponent {
 
       const xScale = d3.scaleLinear()
         .rangeRound([0, width])
-        .domain([0,useMilestone*2]);
+        .domain([0, useMilestone * 2]);
 
       const yScale = d3.scaleBand()
         .rangeRound([0, height])
-        .domain(data.map(d=>d.country)).padding(props.padding);
+        .domain(data.map(d => d.country)).padding(props.padding);
 
-      const transition = d3.transition()
-        .duration(500);
+      // const transition = d3.transition()
+      //   .duration(500);
 
       const navOnClick = (country) => {
         if (props.countryLinks) {
-          const countrySlug = client.getCountrySlug(country)
+          const countrySlug = client.getCountrySlug(country);
 
           // calling this function will navigate to a region page
           props.countryLinks(countrySlug);
@@ -102,7 +102,7 @@ class VaccinationLollipop extends BaseChartComponent {
       this.selection()
         .appendSelect('p.axis-label')
         .text(props.topText)
-        .style('padding-left', (props.margin.left-2)+'px');
+        .style('padding-left', (props.margin.left - 2) + 'px');
 
       this.svg = this.selection()
         .appendSelect('svg') // 👈 Use appendSelect instead of append for non-data-bound elements!
@@ -117,11 +117,11 @@ class VaccinationLollipop extends BaseChartComponent {
       const yAxis = plot.appendSelect('g.axis.y');
       const xAxisTop = plot.appendSelect('g.axis.xTOP');
 
-      xAxisTop.attr('transform', `translate(0,0)`)
+      xAxisTop.attr('transform', 'translate(0,0)')
         .call(
           d3.axisTop(xScale)
             .ticks(4)
-            .tickFormat(d=>d*100)
+            .tickFormat(d => d * 100)
         );
 
       yAxis.attr('transform', 'translate(0, 0)')
@@ -135,7 +135,7 @@ class VaccinationLollipop extends BaseChartComponent {
       yAxis.selectAll('.tick').each(function(d) {
         d3.select(this)
           .on('click', function(e) {
-            navOnClick(e)
+            navOnClick(e);
           });
       });
 
@@ -156,46 +156,46 @@ class VaccinationLollipop extends BaseChartComponent {
         .attr('width', d => xScale(d.perPop))
         .style('fill', props.rectFill);
 
-      if (milestones[milestoneIndex-1]) {
+      if (milestones[milestoneIndex - 1]) {
         const a2 = plot.appendSelect('g.annotations')
-          .appendSelect('g.ann-2')
-  
+          .appendSelect('g.ann-2');
+
         a2.appendSelect('line')
-          .attr('x1', xScale(milestones[milestoneIndex-1]*2))
-          .attr('x2', xScale(milestones[milestoneIndex-1]*2))
+          .attr('x1', xScale(milestones[milestoneIndex - 1] * 2))
+          .attr('x2', xScale(milestones[milestoneIndex - 1] * 2))
           .attr('y2', 0)
           .attr('y1', height)
           .style('stroke', props.annotationStroke)
-          .style('stroke-dasharray',props.strokeDasharray);
-  
+          .style('stroke-dasharray', props.strokeDasharray);
+
         this.selection().appendSelect('p.ann-text-2.annotation-p')
-          .style('left', `${xScale(milestones[milestoneIndex-1]*2)+margin.left}px`)
-          .style('top', (height+margin.top+35)+'px')
-          .text(Mustache.render(props.text.milestone, { number: milestones[milestoneIndex-1]*100 }))
+          .style('left', `${xScale(milestones[milestoneIndex - 1] * 2) + margin.left}px`)
+          .style('top', (height + margin.top + 35) + 'px')
+          .text(Mustache.render(props.text.milestone, { number: milestones[milestoneIndex - 1] * 100 }));
       } else {
-        plot.select('g.ann-2').remove()
-        this.selection().select('.ann-text-2').remove()
+        plot.select('g.ann-2').remove();
+        this.selection().select('.ann-text-2').remove();
       }
 
       const a1 = plot.appendSelect('g.annotations')
-        .appendSelect('g.ann-1')
+        .appendSelect('g.ann-1');
 
       a1.appendSelect('line')
-        .attr('x1', xScale(useMilestone*2))
-        .attr('x2', xScale(useMilestone*2))
+        .attr('x1', xScale(useMilestone * 2))
+        .attr('x2', xScale(useMilestone * 2))
         .attr('y2', 0)
         .attr('y1', height)
         .style('stroke', props.annotationStroke)
         .style('stroke-dasharray', props.strokeDasharray);
 
       const a1text = this.selection().appendSelect('p.ann-text-1.annotation-p')
-        .style('left', `${xScale(useMilestone*2)+margin.left}px`)
-        .style('top', (height+margin.top+35)+'px')
+        .style('left', `${xScale(useMilestone * 2) + margin.left}px`)
+        .style('top', (height + margin.top + 35) + 'px');
 
-      if (milestones[milestoneIndex-1]) {
-        a1text.text(Mustache.render(props.text.milestoneMinor, { number: useMilestone*100 }))
+      if (milestones[milestoneIndex - 1]) {
+        a1text.text(Mustache.render(props.text.milestoneMinor, { number: useMilestone * 100 }));
       } else {
-        a1text.text(Mustache.render(props.text.milestone, { number: useMilestone*100 }))
+        a1text.text(Mustache.render(props.text.milestone, { number: useMilestone * 100 }));
       }
       return this; // Generally, always return the chart class from draw!
     }
