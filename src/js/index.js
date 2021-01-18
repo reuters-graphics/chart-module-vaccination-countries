@@ -20,9 +20,9 @@ class VaccinationLollipop extends BaseChartComponent {
     defaultProps = {
       aspectHeight: 0.7,
       margin: {
-        top: 25,
+        top: 18,
         right: 20,
-        bottom: 40,
+        bottom: 80,
         left: 120,
       },
       filterNumber: 15,
@@ -33,10 +33,11 @@ class VaccinationLollipop extends BaseChartComponent {
       annotationStroke: 'white',
       strokeDasharray: '4',
       text: {
-        milestone: 'Number of doses needed to vaccinate {{ number }}% of the population',
+        milestone: 'Doses needed to vaccinate {{ number }}% of the population',
         milestoneMinor: '...{{ number }}% of population',
       },
       topText: 'Doses per 100 people',
+      countryLinks: function(d){console.log(d)},
     };
 
     /**
@@ -66,9 +67,9 @@ class VaccinationLollipop extends BaseChartComponent {
       const { milestones } = props;
 
       for (let i = milestones.length - 1; i >= 0 ; i--) {
-        if (milestones[i]*2 > maxValue) {
+        if (milestones[i] * 2 > maxValue) {
           useMilestone = milestones[i];
-          milestoneIndex = i
+          milestoneIndex = i;
         }
       }
 
@@ -89,7 +90,20 @@ class VaccinationLollipop extends BaseChartComponent {
       const transition = d3.transition()
         .duration(500);
 
-      this.selection().appendSelect('h6.chart-title').text(props.topText)
+      const navOnClick = (country) => {
+        if (props.countryLinks) {
+          const countrySlug = client.getCountrySlug(country)
+
+          // calling this function will navigate to a region page
+          props.countryLinks(countrySlug);
+        }
+      };
+
+      this.selection()
+        .appendSelect('p.axis-label')
+        .text(props.topText)
+        .style('padding-left', (props.margin.left-2)+'px');
+
       this.svg = this.selection()
         .appendSelect('svg') // 👈 Use appendSelect instead of append for non-data-bound elements!
         .attr('width', width + margin.left + margin.right)
@@ -100,9 +114,7 @@ class VaccinationLollipop extends BaseChartComponent {
         .classed('plot', true)
         .attr('transform', `translate(${margin.left},${margin.top})`);
 
-      const xAxis = plot.appendSelect('g.axis.x');
       const yAxis = plot.appendSelect('g.axis.y');
-
       const xAxisTop = plot.appendSelect('g.axis.xTOP');
 
       xAxisTop.attr('transform', `translate(0,0)`)
@@ -112,20 +124,20 @@ class VaccinationLollipop extends BaseChartComponent {
             .tickFormat(d=>d*100)
         );
 
-      xAxis.attr('transform', `translate(0,${height})`)
-        .call(
-          d3.axisBottom(xScale)
-            .ticks(4)
-            .tickFormat(d=>d*100)
-        );
-
       yAxis.attr('transform', 'translate(0, 0)')
         .call(
           d3.axisLeft(yScale)
             .tickFormat((d) => {
-              return props.countryNameGetter(d)
+              return props.countryNameGetter(d);
             })
         );
+
+      yAxis.selectAll('.tick').each(function(d) {
+        d3.select(this)
+          .on('click', function(e) {
+            navOnClick(e)
+          });
+      });
 
       // We're using d3's new data join method here.
       // Read more about that here: https://observablehq.com/@d3/selection-join
@@ -135,7 +147,7 @@ class VaccinationLollipop extends BaseChartComponent {
         .enter()
         .append('g')
         .attr('class', 'country-container')
-        .attr('transform',d=>` translate(0,${yScale(d.country)} )`);
+        .attr('transform', d => `translate(0,${yScale(d.country)} )`);
 
       countries.appendSelect('rect')
         .attr('x', 0)
@@ -143,6 +155,27 @@ class VaccinationLollipop extends BaseChartComponent {
         .attr('height', d => yScale.bandwidth())
         .attr('width', d => xScale(d.perPop))
         .style('fill', props.rectFill);
+
+      if (milestones[milestoneIndex-1]) {
+        const a2 = plot.appendSelect('g.annotations')
+          .appendSelect('g.ann-2')
+  
+        a2.appendSelect('line')
+          .attr('x1', xScale(milestones[milestoneIndex-1]*2))
+          .attr('x2', xScale(milestones[milestoneIndex-1]*2))
+          .attr('y2', 0)
+          .attr('y1', height)
+          .style('stroke', props.annotationStroke)
+          .style('stroke-dasharray',props.strokeDasharray);
+  
+        this.selection().appendSelect('p.ann-text-2.annotation-p')
+          .style('left', `${xScale(milestones[milestoneIndex-1]*2)+margin.left}px`)
+          .style('top', (height+margin.top+35)+'px')
+          .text(Mustache.render(props.text.milestone, { number: milestones[milestoneIndex-1]*100 }))
+      } else {
+        plot.select('g.ann-2').remove()
+        this.selection().select('.ann-text-2').remove()
+      }
 
       const a1 = plot.appendSelect('g.annotations')
         .appendSelect('g.ann-1')
@@ -153,29 +186,17 @@ class VaccinationLollipop extends BaseChartComponent {
         .attr('y2', 0)
         .attr('y1', height)
         .style('stroke', props.annotationStroke)
-        .style('stroke-dasharray',props.strokeDasharray);
+        .style('stroke-dasharray', props.strokeDasharray);
 
-      this.selection().appendSelect('p.ann-text-1.annotation-p')
+      const a1text = this.selection().appendSelect('p.ann-text-1.annotation-p')
         .style('left', `${xScale(useMilestone*2)+margin.left}px`)
-        .style('top', `${yScale(data[2].country)+margin.top}px`)
-        .text(Mustache.render(props.text.milestone, { number: useMilestone*100 }))
+        .style('top', (height+margin.top+35)+'px')
 
-      const a2 = plot.appendSelect('g.annotations')
-        .appendSelect('g.ann-2')
-
-      a2.appendSelect('line')
-        .attr('x1', xScale(milestones[milestoneIndex-1]*2))
-        .attr('x2', xScale(milestones[milestoneIndex-1]*2))
-        .attr('y2', 0)
-        .attr('y1', height)
-        .style('stroke', props.annotationStroke)
-        .style('stroke-dasharray',props.strokeDasharray);
-
-      this.selection().appendSelect('p.ann-text-2.annotation-p')
-        .style('left', `${xScale(milestones[milestoneIndex-1]*2)+margin.left}px`)
-        .style('top', `${yScale(data[data.length-1].country)+margin.top}px`)
-        .text(Mustache.render(props.text.milestoneMinor, { number: milestones[milestoneIndex-1]*100 }))
-
+      if (milestones[milestoneIndex-1]) {
+        a1text.text(Mustache.render(props.text.milestoneMinor, { number: useMilestone*100 }))
+      } else {
+        a1text.text(Mustache.render(props.text.milestone, { number: useMilestone*100 }))
+      }
       return this; // Generally, always return the chart class from draw!
     }
 }

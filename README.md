@@ -41,7 +41,7 @@ chart
   .props({
       aspectHeight: 0.7,
 
-      // 
+      // margins for the chart
       margin: {
         top: 25,
         right: 20,
@@ -64,6 +64,10 @@ chart
         milestoneMinor: '...{{ number }}% of population',
       },
       topText: 'Doses per 100 people',
+      
+      // pass function if you want country names hyperlinked
+      countryLinks: null,
+
     })
   .draw();
 
