@@ -20,7 +20,29 @@ const chart = new VaccinationLollipop();
 chart
   .selection('#chart')
   .data([1, 2, 3])
-  .props({ stroke: 'orange' })
+  .props({
+      aspectHeight: 0.7,
+      margin: {
+        top: 25,
+        right: 20,
+        bottom: 40,
+        left: 120,
+      },
+      filterNumber: 15,
+      dots: true,
+      radius: 5,
+      padding: .4,
+      rectFill: 'rgba(255,255,255,.3)',
+      countryNameGetter: (d) => client.getCountry(d).translations['en'],
+      milestones: [.1, .2, .3, .4, .5],
+      annotationStroke: 'white',
+      strokeDasharray: '4',
+      text: {
+        milestone: 'Number of doses needed to vaccinate {{ number }}% of the population',
+        milestoneMinor: '...{{ number }}% of population',
+      },
+      topText: 'Doses per 100 people',
+    })
   .draw();
 
 // You can call any method again to update the chart.

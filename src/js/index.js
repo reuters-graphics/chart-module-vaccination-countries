@@ -18,8 +18,6 @@ class VaccinationLollipop extends BaseChartComponent {
      * functions that can get properties from your data.
      */
     defaultProps = {
-      stroke: '#aaa',
-      strokeWidth: 8,
       aspectHeight: 0.7,
       margin: {
         top: 25,
