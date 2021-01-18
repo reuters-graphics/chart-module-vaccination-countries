@@ -19,18 +19,40 @@ const chart = new VaccinationLollipop();
 // as well as any props or data to their respective methods. Then call draw.
 chart
   .selection('#chart')
-  .data([1, 2, 3])
+  // For global data, pull data from `http://graphics.thomsonreuters.com/data/2020/coronavirus/owid-covid-vaccinations/latest-perpop-data-all.json`
+  .data([{
+    "country": "Israel",
+    "countryISO": "IL",
+    "date": "2021-01-13",
+    "totalDoses": 1990803,
+    "vaccineName": "Pfizer/BioNTech",
+    "perPop": "21989.80",
+    "population": 9053300
+  },
+  {
+    "country": "United Arab Emirates",
+    "countryISO": "AE",
+    "date": "2021-01-13",
+    "totalDoses": 1394580,
+    "vaccineName": "Pfizer/BioNTech, Sinopharm",
+    "perPop": "14273.33",
+    "population": 9770529
+  },]) // 
   .props({
       aspectHeight: 0.7,
+
+      // 
       margin: {
         top: 25,
         right: 20,
         bottom: 40,
         left: 120,
       },
+
+      // number of countries to filter by
       filterNumber: 15,
-      dots: true,
-      radius: 5,
+
+      // padding b/w bars
       padding: .4,
       rectFill: 'rgba(255,255,255,.3)',
       countryNameGetter: (d) => client.getCountry(d).translations['en'],

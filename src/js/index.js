@@ -26,8 +26,6 @@ class VaccinationLollipop extends BaseChartComponent {
         left: 120,
       },
       filterNumber: 15,
-      dots: true,
-      radius: 5,
       padding: .4,
       rectFill: 'rgba(255,255,255,.3)',
       countryNameGetter: (d) => client.getCountry(d).translations['en'],
