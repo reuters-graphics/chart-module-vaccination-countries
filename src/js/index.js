@@ -18,26 +18,28 @@ class VaccinationLollipop extends BaseChartComponent {
      * functions that can get properties from your data.
      */
     defaultProps = {
-      aspectHeight: 0.7,
+      height: 450,
       margin: {
         top: 18,
         right: 20,
-        bottom: 80,
+        bottom: 70,
         left: 120,
       },
+      axisMarginCharacter: 7,
       filterNumber: 15,
-      padding: .4,
+      padding: 0.4,
       rectFill: 'rgba(255,255,255,.3)',
       countryNameGetter: (d) => client.getCountry(d).translations['en'],
-      milestones: [.1, .2, .3, .4, .5],
+      milestones: [0.1, 0.2, 0.3, 0.4, 0.5],
       annotationStroke: 'white',
-      strokeDasharray: '4',
+      strokeDasharray: '5 5',
       text: {
         milestone: 'Doses needed to vaccinate {{ number }}% of the population',
         milestoneMinor: '...{{ number }}% of population',
       },
       topText: 'Doses per 100 people',
       countryLinks: function(d){console.log(d)},
+      annotationHideBreakpoint: 550,
     };
 
     /**
@@ -57,6 +59,7 @@ class VaccinationLollipop extends BaseChartComponent {
       const props = this.props(); // Props passed to your chart
       data = data.slice(0, props.filterNumber);
       const { margin } = props;
+      margin.left = d3.max(data,d=>d.country.length)*props.axisMarginCharacter;
 
       data.forEach(function(d) {
         d.perPop = d.totalDoses / d.population;
@@ -75,9 +78,8 @@ class VaccinationLollipop extends BaseChartComponent {
 
       const node = this.selection().node();
       const { width: containerWidth } = node.getBoundingClientRect(); // Respect the width of your container!
-
       const width = containerWidth - margin.left - margin.right;
-      const height = (containerWidth * props.aspectHeight) - margin.top - margin.bottom;
+      const height = (props.height) - margin.top - margin.bottom;
 
       const xScale = d3.scaleLinear()
         .rangeRound([0, width])
@@ -132,31 +134,46 @@ class VaccinationLollipop extends BaseChartComponent {
             })
         );
 
-      yAxis.selectAll('.tick').each(function(d) {
-        d3.select(this)
-          .on('click', function(e) {
-            navOnClick(e)
-          });
-      });
+      const bars = plot.appendSelect('g.country-container')
+        .selectAll('rect')
+        .data(data, d => d.country);
 
-      // We're using d3's new data join method here.
-      // Read more about that here: https://observablehq.com/@d3/selection-join
-      // ... or feel free to use the old, reliable General Update Pattern.
-      const countries = plot.selectAll('g.country-container')
-        .data(data, d => d.country)
+      bars
         .enter()
-        .append('g')
-        .attr('class', 'country-container')
-        .attr('transform', d => `translate(0,${yScale(d.country)} )`);
-
-      countries.appendSelect('rect')
+        .append('rect')
+        .style('fill', props.rectFill)
+        .merge(bars)
         .attr('x', 0)
-        .attr('y', 0)
+        .attr('y', d => yScale(d.country))
         .attr('height', d => yScale.bandwidth())
-        .attr('width', d => xScale(d.perPop))
-        .style('fill', props.rectFill);
+        .attr('width', d => xScale(d.perPop));
 
-      if (milestones[milestoneIndex-1]) {
+      bars.exit()
+        .remove();
+
+      yAxis.selectAll('.tick text')
+        .on('click', function(event, d) {
+          navOnClick(d)
+        });
+
+
+      // const countryNames = this.selection().appendSelect('div.country-name-container.x.axis')
+      //   .selectAll('div')
+      //   .data(data, d => d.country);
+
+      // countryNames
+      //   .enter()
+      //   .append('div')
+      //   .attr('class','country-name')
+      //   .merge(countryNames)
+      //   .style('left',`${-margin.left}px`)
+      //   .style('top',d=>`${yScale(d.country)}px`)
+      //   .text(d=>props.countryNameGetter(d.country))
+
+      // countryNames.exit()
+      //   .remove();
+
+      if (milestones[milestoneIndex-1] && node.getBoundingClientRect().width>props.annotationHideBreakpoint) {
         const a2 = plot.appendSelect('g.annotations')
           .appendSelect('g.ann-2')
   
@@ -167,18 +184,18 @@ class VaccinationLollipop extends BaseChartComponent {
           .attr('y1', height)
           .style('stroke', props.annotationStroke)
           .style('stroke-dasharray',props.strokeDasharray);
-  
+
         this.selection().appendSelect('p.ann-text-2.annotation-p')
           .style('left', `${xScale(milestones[milestoneIndex-1]*2)+margin.left}px`)
-          .style('top', (height+margin.top+35)+'px')
+          .style('top', (height+margin.top+30)+'px')
           .text(Mustache.render(props.text.milestone, { number: milestones[milestoneIndex-1]*100 }))
       } else {
-        plot.select('g.ann-2').remove()
-        this.selection().select('.ann-text-2').remove()
+        plot.select('g.ann-2').remove();
+        this.selection().select('.ann-text-2').remove();
       }
 
       const a1 = plot.appendSelect('g.annotations')
-        .appendSelect('g.ann-1')
+        .appendSelect('g.ann-1');
 
       a1.appendSelect('line')
         .attr('x1', xScale(useMilestone*2))
@@ -190,13 +207,14 @@ class VaccinationLollipop extends BaseChartComponent {
 
       const a1text = this.selection().appendSelect('p.ann-text-1.annotation-p')
         .style('left', `${xScale(useMilestone*2)+margin.left}px`)
-        .style('top', (height+margin.top+35)+'px')
+        .style('top', (height+margin.top+30)+'px')
 
-      if (milestones[milestoneIndex-1]) {
+      if (milestones[milestoneIndex-1] && node.getBoundingClientRect().width > props.annotationHideBreakpoint) {
         a1text.text(Mustache.render(props.text.milestoneMinor, { number: useMilestone*100 }))
       } else {
         a1text.text(Mustache.render(props.text.milestone, { number: useMilestone*100 }))
       }
+
       return this; // Generally, always return the chart class from draw!
     }
 }

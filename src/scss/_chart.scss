@@ -4,8 +4,26 @@
 #{$VaccinationLollipop-container} {
   /* Write your chart styles here */
   position: relative;
+  .country-name-container{
+    .country-name{
+      position: absolute;
+    }
+  }
   .axis {
-    pointer-events: none;
+    &.y{
+      text{
+        font-weight: 400;
+        letter-spacing: .4px;
+        text-transform: uppercase;
+        fill: rgba(255,255,255,.75);
+        font-size: 12px;
+        cursor: pointer;
+      }
+      text:hover{
+        text-decoration: underline;
+        font-weight: 600;
+      }
+    }
     text {
       font-family: $font-family-sans-serif;
       font-size: 13px;

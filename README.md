@@ -68,6 +68,12 @@ chart
       // pass function if you want country names hyperlinked
       countryLinks: null,
 
+      // pixels per character for y axis
+      axisMarginCharacter: 7,
+
+      // at what breakpoint should I hide the left annotation on the chart
+      annotationHideBreakpoint: 550,
+
     })
   .draw();
 
