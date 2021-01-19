@@ -1370,13 +1370,14 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "defaultProps", {
-      aspectHeight: 0.7,
+      height: 450,
       margin: {
         top: 18,
         right: 20,
-        bottom: 80,
+        bottom: 70,
         left: 120
       },
+      axisMarginCharacter: 7,
       filterNumber: 15,
       padding: 0.4,
       rectFill: 'rgba(255,255,255,.3)',
@@ -1385,7 +1386,7 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
       },
       milestones: [0.1, 0.2, 0.3, 0.4, 0.5],
       annotationStroke: 'white',
-      strokeDasharray: '4',
+      strokeDasharray: '5 5',
       text: {
         milestone: 'Doses needed to vaccinate {{ number }}% of the population',
         milestoneMinor: '...{{ number }}% of population'
@@ -1393,7 +1394,8 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
       topText: 'Doses per 100 people',
       countryLinks: function countryLinks(d) {
         console.log(d);
-      }
+      },
+      annotationHideBreakpoint: 550
     });
 
     _defineProperty(_assertThisInitialized(_this), "defaultData", []);
@@ -1415,6 +1417,9 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
 
       data = data.slice(0, props.filterNumber);
       var margin = props.margin;
+      margin.left = d3.max(data, function (d) {
+        return d.country.length;
+      }) * props.axisMarginCharacter;
       data.forEach(function (d) {
         d.perPop = d.totalDoses / d.population;
       });
@@ -1438,7 +1443,7 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
 
 
       var width = containerWidth - margin.left - margin.right;
-      var height = containerWidth * props.aspectHeight - margin.top - margin.bottom;
+      var height = props.height - margin.top - margin.bottom;
       var xScale = d3.scaleLinear().rangeRound([0, width]).domain([0, useMilestone * 2]);
       var yScale = d3.scaleBand().rangeRound([0, height]).domain(data.map(function (d) {
         return d.country;
@@ -1465,26 +1470,34 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
       yAxis.attr('transform', 'translate(0, 0)').call(d3.axisLeft(yScale).tickFormat(function (d) {
         return props.countryNameGetter(d);
       }));
-      yAxis.selectAll('.tick').each(function (d) {
-        d3.select(this).on('click', function (e) {
-          navOnClick(e);
-        });
-      }); // We're using d3's new data join method here.
-      // Read more about that here: https://observablehq.com/@d3/selection-join
-      // ... or feel free to use the old, reliable General Update Pattern.
-
-      var countries = plot.selectAll('g.country-container').data(data, function (d) {
+      var bars = plot.appendSelect('g.country-container').selectAll('rect').data(data, function (d) {
         return d.country;
-      }).enter().append('g').attr('class', 'country-container').attr('transform', function (d) {
-        return "translate(0,".concat(yScale(d.country), " )");
       });
-      countries.appendSelect('rect').attr('x', 0).attr('y', 0).attr('height', function (d) {
+      bars.enter().append('rect').style('fill', props.rectFill).merge(bars).attr('x', 0).attr('y', function (d) {
+        return yScale(d.country);
+      }).attr('height', function (d) {
         return yScale.bandwidth();
       }).attr('width', function (d) {
         return xScale(d.perPop);
-      }).style('fill', props.rectFill);
+      });
+      bars.exit().remove();
+      yAxis.selectAll('.tick text').on('click', function (event, d) {
+        navOnClick(d);
+      }); // const countryNames = this.selection().appendSelect('div.country-name-container.x.axis')
+      //   .selectAll('div')
+      //   .data(data, d => d.country);
+      // countryNames
+      //   .enter()
+      //   .append('div')
+      //   .attr('class','country-name')
+      //   .merge(countryNames)
+      //   .style('left',`${-margin.left}px`)
+      //   .style('top',d=>`${yScale(d.country)}px`)
+      //   .text(d=>props.countryNameGetter(d.country))
+      // countryNames.exit()
+      //   .remove();
 
-      if (milestones[milestoneIndex - 1]) {
+      if (milestones[milestoneIndex - 1] && node.getBoundingClientRect().width > props.annotationHideBreakpoint) {
         var a2 = plot.appendSelect('g.annotations').appendSelect('g.ann-2');
         a2.appendSelect('line').attr('x1', xScale(milestones[milestoneIndex - 1] * 2)).attr('x2', xScale(milestones[milestoneIndex - 1] * 2)).attr('y2', 0).attr('y1', height).style('stroke', props.annotationStroke).style('stroke-dasharray', props.strokeDasharray);
         this.selection().appendSelect('p.ann-text-2.annotation-p').style('left', "".concat(xScale(milestones[milestoneIndex - 1] * 2) + margin.left, "px")).style('top', height + margin.top + 35 + 'px').text(Mustache__default['default'].render(props.text.milestone, {
@@ -1497,9 +1510,9 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
 
       var a1 = plot.appendSelect('g.annotations').appendSelect('g.ann-1');
       a1.appendSelect('line').attr('x1', xScale(useMilestone * 2)).attr('x2', xScale(useMilestone * 2)).attr('y2', 0).attr('y1', height).style('stroke', props.annotationStroke).style('stroke-dasharray', props.strokeDasharray);
-      var a1text = this.selection().appendSelect('p.ann-text-1.annotation-p').style('left', "".concat(xScale(useMilestone * 2) + margin.left, "px")).style('top', height + margin.top + 35 + 'px');
+      var a1text = this.selection().appendSelect('p.ann-text-1.annotation-p').style('left', "".concat(xScale(useMilestone * 2) + margin.left, "px")).style('top', height + margin.top + 30 + 'px');
 
-      if (milestones[milestoneIndex - 1]) {
+      if (milestones[milestoneIndex - 1] && node.getBoundingClientRect().width > props.annotationHideBreakpoint) {
         a1text.text(Mustache__default['default'].render(props.text.milestoneMinor, {
           number: useMilestone * 100
         }));
