@@ -30,7 +30,7 @@ class VaccinationLollipop extends BaseChartComponent {
       padding: 0.4,
       rectFill: 'rgba(255,255,255,.3)',
       countryNameGetter: (d) => client.getCountry(d).translations.en,
-      milestones: [0.1, 0.2, 0.3, 0.4, 0.5],
+      milestones: [0.1, 0.2, 0.3, 0.4, .8, 1, 1.2],
       annotationStroke: 'white',
       strokeDasharray: '5 5',
       text: {
@@ -57,17 +57,16 @@ class VaccinationLollipop extends BaseChartComponent {
     draw() {
       let data = this.data(); // Data passed to your chart
       const props = this.props(); // Props passed to your chart
+      data = data.filter(function(d) {
+        return d.totalDoses && d.population
+      })
       data = data.slice(0, props.filterNumber);
       const { margin } = props;
       margin.left = d3.max(data,d=>d.country.length)*props.axisMarginCharacter;
-      data.filter(function(d){
-        return d.totalDoses && d.population
-      })
+
       data.forEach(function(d) {
         d.perPop = d.totalDoses / d.population;
       });
-
-
 
       let useMilestone, milestoneIndex;
       const maxValue = d3.max(data, d => d.perPop);
