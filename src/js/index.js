@@ -30,7 +30,7 @@ class VaccinationLollipop extends BaseChartComponent {
       padding: 0.4,
       rectFill: 'rgba(255,255,255,.3)',
       countryNameGetter: (d) => client.getCountry(d).translations.en,
-      milestones: [0.1, 0.2, 0.3, 0.4, .8, 1, 1.2],
+      milestones: [0.1, 0.2, 0.3, 0.4,.8,1.2],
       annotationStroke: 'white',
       strokeDasharray: '5 5',
       text: {
@@ -78,7 +78,11 @@ class VaccinationLollipop extends BaseChartComponent {
           milestoneIndex = i;
         }
       }
-
+      if (!useMilestone) {
+        milestones.push(parseInt(d3.max(data, d => d.perPop)*10)/20)
+        useMilestone = milestones[milestones.length-1]
+        milestoneIndex = milestones.length-1
+      }
       const node = this.selection().node();
       const { width: containerWidth } = node.getBoundingClientRect(); // Respect the width of your container!
       const width = containerWidth - margin.left - margin.right;

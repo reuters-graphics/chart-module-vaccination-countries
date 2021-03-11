@@ -1384,7 +1384,7 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
       countryNameGetter: function countryNameGetter(d) {
         return client.getCountry(d).translations.en;
       },
-      milestones: [0.1, 0.2, 0.3, 0.4, 0.5],
+      milestones: [0.1, 0.2, 0.3, 0.4, .8, 1.2],
       annotationStroke: 'white',
       strokeDasharray: '5 5',
       text: {
@@ -1415,14 +1415,14 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
 
       var props = this.props(); // Props passed to your chart
 
+      data = data.filter(function (d) {
+        return d.totalDoses && d.population;
+      });
       data = data.slice(0, props.filterNumber);
       var margin = props.margin;
       margin.left = d3.max(data, function (d) {
         return d.country.length;
       }) * props.axisMarginCharacter;
-      data.filter(function (d) {
-        return d.totalDoses && d.population;
-      });
       data.forEach(function (d) {
         d.perPop = d.totalDoses / d.population;
       });
@@ -1437,6 +1437,14 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
           useMilestone = milestones[i];
           milestoneIndex = i;
         }
+      }
+
+      if (!useMilestone) {
+        milestones.push(parseInt(d3.max(data, function (d) {
+          return d.perPop;
+        }) * 10) / 20);
+        useMilestone = milestones[milestones.length - 1];
+        milestoneIndex = milestones.length - 1;
       }
 
       var node = this.selection().node();
