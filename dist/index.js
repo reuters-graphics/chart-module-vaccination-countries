@@ -1420,6 +1420,9 @@ var VaccinationLollipop = /*#__PURE__*/function (_BaseChartComponent) {
       margin.left = d3.max(data, function (d) {
         return d.country.length;
       }) * props.axisMarginCharacter;
+      data.filter(function (d) {
+        return d.totalDoses && d.population;
+      });
       data.forEach(function (d) {
         d.perPop = d.totalDoses / d.population;
       });
